@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Power Monitoring</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="https://cdn.jsdelivr.net/npm/justgage"></script>
+  <script src="https://cdn.jsdelivr.net/npm/raphael"></script>
+
+  <style>
+    body {
+      background: #111;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+    h1 { margin-top: 20px; }
+    .gauge-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Monitoring Power Rumah</h1>
+
+<div class="gauge-container">
+  <div id="voltageGauge" style="width:200px;height:160px;"></div>
+  <div id="currentGauge" style="width:200px;height:160px;"></div>
+  <div id="powerGauge" style="width:200px;height:160px;"></div>
+</div>
+
+<script>
+var voltageGauge = new JustGage({
+  id: "voltageGauge",
+  value: 220,
+  min: 0,
+  max: 250,
+  title: "Voltage",
+  label: "Volt"
+});
+
+var currentGauge = new JustGage({
+  id: "currentGauge",
+  value: 1.2,
+  min: 0,
+  max: 10,
+  title: "Current",
+  label: "Ampere"
+});
+
+var powerGauge = new JustGage({
+  id: "powerGauge",
+  value: 350,
+  min: 0,
+  max: 2200,
+  title: "Power",
+  label: "Watt"
+});
+
+// simulasi update tiap 3 detik
+setInterval(function(){
+  voltageGauge.refresh(210 + Math.random()*20);
+  currentGauge.refresh(Math.random()*5);
+  powerGauge.refresh(Math.random()*1500);
+}, 3000);
+
+</script>
+
+</body>
+</html>
