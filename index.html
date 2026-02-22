@@ -87,7 +87,9 @@
 <div class="header">
   ⚡ Monitoring Power Rumah
 </div>
-
+  
+<div id="userInfo" style="text-align:center; margin-top:10px;"></div>
+  
 <div class="login-box">
   <input type="email" id="email" placeholder="Email">
   <input type="password" id="password" placeholder="Password">
@@ -123,7 +125,14 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-database.js";
+import { signOut } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
+window.logoutUser = function() {
+  signOut(auth).then(() => {
+    alert("Logout berhasil");
+  });
+}
+  
 const firebaseConfig = {
   apiKey: "AIzaSyCLqJiHICkftz_lo2pEM3u0_kVx358Ayhc",
   authDomain: "monitoringpowerhome-40408.firebaseapp.com",
@@ -187,7 +196,14 @@ window.loginUser = function() {
 onAuthStateChanged(auth, (user) => {
   if (user) {
     document.getElementById("dashboard").style.display = "flex";
+    document.querySelector(".login-box").style.display = "none";
+    document.getElementById("userInfo").innerHTML =
+      user.email + ' | <button onclick="logoutUser()">Logout</button>';
     loadData();
+  } else {
+    document.getElementById("dashboard").style.display = "none";
+    document.querySelector(".login-box").style.display = "block";
+    document.getElementById("userInfo").innerHTML = "";
   }
 });
 
@@ -209,3 +225,4 @@ function loadData() {
 
 </body>
 </html>
+
