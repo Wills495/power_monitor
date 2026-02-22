@@ -4,40 +4,91 @@
   <title>Power Monitoring</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <script src="https://cdn.jsdelivr.net/npm/justgage"></script>
   <script src="https://cdn.jsdelivr.net/npm/raphael"></script>
+  <script src="https://cdn.jsdelivr.net/npm/justgage"></script>
 
   <style>
-  body {
-    background: #f4f6f9;   /* abu muda */
-    color: #222;           /* teks gelap */
-    font-family: Arial, sans-serif;
-    text-align: center;
-  }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f9;
+    }
 
-  h1 { 
-    margin-top: 25px; 
-  }
+    .header {
+      background: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
 
-  .gauge-container {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-    margin-top: 50px;
-  }
-</style>
+    .dashboard {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      padding: 50px 20px;
+    }
+
+    .card {
+      background: white;
+      width: 250px;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+    }
+
+    .card-title {
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #555;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #888;
+      font-size: 14px;
+    }
+  </style>
 </head>
 
 <body>
 
-<h1>Monitoring Power Rumah</h1>
-
-<div class="gauge-container">
-  <div id="voltageGauge" style="width:200px;height:160px;"></div>
-  <div id="currentGauge" style="width:200px;height:160px;"></div>
-  <div id="powerGauge" style="width:200px;height:160px;"></div>
+<div class="header">
+  ⚡ Monitoring Power Rumah
 </div>
+
+<div class="dashboard">
+
+  <div class="card">
+    <div class="card-title">Voltage</div>
+    <div id="voltageGauge" style="width:200px;height:160px;margin:auto;"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Current</div>
+    <div id="currentGauge" style="width:200px;height:160px;margin:auto;"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Power</div>
+    <div id="powerGauge" style="width:200px;height:160px;margin:auto;"></div>
+  </div>
+
+</div>
+
+<footer>
+  ESP32 Power Monitoring System
+</footer>
 
 <script>
 var voltageGauge = new JustGage({
@@ -45,17 +96,25 @@ var voltageGauge = new JustGage({
   value: 220,
   min: 0,
   max: 250,
-  title: "Voltage",
-  label: "Volt"
+  label: "Volt",
+  titleFontColor: "#333",
+  valueFontColor: "#000",
+  labelFontColor: "#666",
+  levelColors: ["#2ecc71"],
+  levelColorsGradient: false
 });
 
 var currentGauge = new JustGage({
   id: "currentGauge",
-  value: 1.2,
+  value: 1.5,
   min: 0,
   max: 10,
-  title: "Current",
-  label: "Ampere"
+  label: "Ampere",
+  titleFontColor: "#333",
+  valueFontColor: "#000",
+  labelFontColor: "#666",
+  levelColors: ["#3498db"],
+  levelColorsGradient: false
 });
 
 var powerGauge = new JustGage({
@@ -63,11 +122,15 @@ var powerGauge = new JustGage({
   value: 350,
   min: 0,
   max: 2200,
-  title: "Power",
-  label: "Watt"
+  label: "Watt",
+  titleFontColor: "#333",
+  valueFontColor: "#000",
+  labelFontColor: "#666",
+  levelColors: ["#f39c12"],
+  levelColorsGradient: false
 });
 
-// simulasi update tiap 3 detik
+// Simulasi update tiap 3 detik
 setInterval(function(){
   voltageGauge.refresh(210 + Math.random()*20);
   currentGauge.refresh(Math.random()*5);
@@ -77,5 +140,4 @@ setInterval(function(){
 </script>
 
 </body>
-
 </html>
